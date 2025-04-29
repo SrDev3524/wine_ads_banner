@@ -9,7 +9,7 @@ function ShineImg(img) {
     var imgWidth = img.naturalWidth;
     var imgHeight = img.naturalHeight;
     var displayHeight = 150;
-    var displayWidth = (imgWidth / imgHeight) * displayHeight;
+    var displayWidth = (imgWidth / imgHeight) * displayHeight - 2;
     
     this.imgToCanvas = function (img) {
         this.canvas = document.createElement('canvas');
