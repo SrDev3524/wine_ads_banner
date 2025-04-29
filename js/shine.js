@@ -103,6 +103,39 @@ function ShineImg(img) {
     return this;
 }
 
-window.onload = function () {
-    ShineImg(document.getElementById('shine'));
+
+function createBubbleEffect(container) {
+    const numBubbles = 30;
+    
+    // Create bubble elements
+    for (let i = 0; i < numBubbles; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        const size = 2 + Math.random() * 4;
+        bubble.style.width = `${size}px`;
+        bubble.style.height = `${size}px`;
+        bubble.style.left = `${Math.random() * 100}%`;
+        bubble.style.bottom = `${Math.random() * 20}%`;
+        const duration = 2 + Math.random() * 4;
+        bubble.style.animationDuration = `${duration}s`;
+        bubble.style.animationDelay = `${Math.random() * 2}s`;
+        
+        container.appendChild(bubble);
+    }
 }
+
+window.onload = function() {
+    ShineImg(document.getElementById('shine'));
+    
+    const bottleContainer = document.querySelector('.bottle-container');
+    
+    bottleContainer.addEventListener('mouseenter', function() {
+        const existingBubbles = document.querySelectorAll('.bubble');
+        existingBubbles.forEach(bubble => bubble.remove());
+        
+        createBubbleEffect(this);
+    });
+    
+    bottleContainer.addEventListener('mouseleave', function() {
+    });
+};
