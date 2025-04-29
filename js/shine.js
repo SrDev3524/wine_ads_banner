@@ -103,11 +103,9 @@ function ShineImg(img) {
     return this;
 }
 
-
 function createBubbleEffect(container) {
     const numBubbles = 30;
     
-    // Create bubble elements
     for (let i = 0; i < numBubbles; i++) {
         const bubble = document.createElement('div');
         bubble.className = 'bubble';
@@ -115,7 +113,7 @@ function createBubbleEffect(container) {
         bubble.style.width = `${size}px`;
         bubble.style.height = `${size}px`;
         bubble.style.left = `${Math.random() * 100}%`;
-        bubble.style.bottom = `${Math.random() * 20}%`;
+        bubble.style.bottom = `${10 + Math.random() * 30}%`;
         const duration = 2 + Math.random() * 4;
         bubble.style.animationDuration = `${duration}s`;
         bubble.style.animationDelay = `${Math.random() * 2}s`;
@@ -124,18 +122,53 @@ function createBubbleEffect(container) {
     }
 }
 
+function continuousBubbles(container) {
+    if (container.bubbleTimer) {
+        clearInterval(container.bubbleTimer);
+    }
+    
+    createBubbleEffect(container);
+    
+    container.bubbleTimer = setInterval(() => {
+        for (let i = 0; i < 5; i++) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = 2 + Math.random() * 4;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${Math.random() * 100}%`;
+            bubble.style.bottom = `${10 + Math.random() * 30}%`;
+            const duration = 2 + Math.random() * 4;
+            bubble.style.animationDuration = `${duration}s`;
+            bubble.style.animationDelay = `0s`;
+            
+            container.appendChild(bubble);
+        }
+        
+        const allBubbles = container.querySelectorAll('.bubble');
+        if (allBubbles.length > 100) {
+            for (let i = 0; i < allBubbles.length - 100; i++) {
+                if (allBubbles[i]) {
+                    allBubbles[i].remove();
+                }
+            }
+        }
+    }, 500);
+}
+
 window.onload = function() {
     ShineImg(document.getElementById('shine'));
     
     const bottleContainer = document.querySelector('.bottle-container');
     
     bottleContainer.addEventListener('mouseenter', function() {
-        const existingBubbles = document.querySelectorAll('.bubble');
-        existingBubbles.forEach(bubble => bubble.remove());
-        
-        createBubbleEffect(this);
+        continuousBubbles(this);
     });
     
     bottleContainer.addEventListener('mouseleave', function() {
+        if (this.bubbleTimer) {
+            clearInterval(this.bubbleTimer);
+            this.bubbleTimer = null;
+        }
     });
 };

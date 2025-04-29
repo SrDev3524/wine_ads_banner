@@ -160,6 +160,7 @@ a {
     pointer-events: none;
     animation: bubbleRise linear forwards;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    will-change: transform, opacity;
 }
 
 @keyframes bubbleRise {
@@ -167,17 +168,26 @@ a {
         opacity: 0;
         transform: translateY(0) translateX(0);
     }
-    10% {
+    5% {
         opacity: 0.8;
+    }
+    80% {
+        opacity: 0.6;
     }
     100% {
         opacity: 0;
-        transform: translateY(-100px) translateX(calc(sin(var(--random-offset, 0deg)) * 20px));
+        transform: translateY(-150px) translateX(calc(20px * (0.5 - var(--random, 0.5))));
     }
 }
 
-.bottle-container:hover {
+.bottle-container {
+    position: relative;
+    overflow: visible;
     transition: transform 0.3s ease;
+}
+
+.bottle-container:hover {
+    transform: scale(1.02);
 }
 
 .bottle-container::after {
@@ -187,7 +197,7 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
