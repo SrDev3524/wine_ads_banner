@@ -53,21 +53,34 @@ function ShineImg(img) {
 
     var x = this.canvas.width + 60;
     var self = this;
+    var animationSpeed = 2;
+    var frameInterval = 10;
+    var pauseBetweenAnimations = 2000;
 
     this.animateGradient = function () {
+        if (self.animation) {
+            clearInterval(self.animation);
+        }
+        
+        x = self.canvas.width + 60;
+        
         self.animation = setInterval(function () {
             self.context.clearRect(0, 0, self.canvas.width, self.canvas.height);
             self.context.drawImage(img, 0, 0, self.canvas.width, self.canvas.height);
+            
             self.placeGradient(x);
-            x -= 2;
+            
+            x -= animationSpeed;
+            
             if (x < -60) {
-                x = self.canvas.width + 60;
                 clearInterval(self.animation);
+                self.animation = null;
+                
                 setTimeout(function () {
                     self.animateGradient();
-                }, 2000);
+                }, pauseBetweenAnimations);
             }
-        }, 10);
+        }, frameInterval);
     }
 
     setTimeout(function () {
@@ -77,11 +90,14 @@ function ShineImg(img) {
     window.addEventListener('blur', function () {
         if (self.animation) {
             clearInterval(self.animation);
+            self.animation = null;
         }
     }, false);
 
     window.addEventListener('focus', function () {
-        self.animateGradient();
+        if (!self.animation) {
+            self.animateGradient();
+        }
     }, false);
 
     return this;
