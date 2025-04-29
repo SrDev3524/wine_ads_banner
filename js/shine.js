@@ -159,16 +159,16 @@ function continuousBubbles(container) {
 window.onload = function() {
     ShineImg(document.getElementById('shine'));
     
-    const bottleContainer = document.querySelector('.bottle-container');
+    // const bottleContainer = document.querySelector('.bottle-container');
     
-    bottleContainer.addEventListener('mouseenter', function() {
-        continuousBubbles(this);
-    });
+    // bottleContainer.addEventListener('mouseenter', function() {
+    //     continuousBubbles(this);
+    // });
     
-    bottleContainer.addEventListener('mouseleave', function() {
-        if (this.bubbleTimer) {
-            clearInterval(this.bubbleTimer);
-            this.bubbleTimer = null;
-        }
-    });
+    // bottleContainer.addEventListener('mouseleave', function() {
+    //     if (this.bubbleTimer) {
+    //         clearInterval(this.bubbleTimer);
+    //         this.bubbleTimer = null;
+    //     }
+    // });
 };
